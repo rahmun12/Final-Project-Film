@@ -1,3 +1,4 @@
+import axios from "axios";
 import { HeartIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -11,8 +12,7 @@ const DetailBeranda = () => {
   const [userRating, setUserRating] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
 
-
-    const getFilm = async () => {
+  const getFilm = async () => {
     try {
       const response = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {
         method: "GET",
@@ -48,24 +48,25 @@ const DetailBeranda = () => {
     setIsFavorite(!isFavorite);
   };
 
-
-  const handleRating = (rating) => {
-    console.log("Rating diberikan:", rating); 
-    const ratedMovie = { ...film, userRating: rating };
-    let ratedMovies = JSON.parse(localStorage.getItem("ratedMovies")) || [];
-
-    const movieIndex = ratedMovies.findIndex((m) => m.id === film.id);
-    if (movieIndex !== -1) {
-      ratedMovies[movieIndex].userRating = rating;
-    } else {
-      ratedMovies.push(ratedMovie);
-    }
-
-    localStorage.setItem("ratedMovies", JSON.stringify(ratedMovies));
+  const handleRating = async (rating) => {
     setUserRating(rating);
-    console.log("Daftar film yang di-rating:", ratedMovies); 
+    try {
+      const res = await axios.post(
+        `https://api.themoviedb.org/3/movie/${id}/rating`,
+        { value: rating },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNGJlOGY1ZWExYmQyY2Q2ZTE5YTQxOTdmZDQyOWM0ZiIsIm5iZiI6MTcyODM1ODA5My4yNDQ5NzgsInN1YiI6IjY3MDQ4MjQ3MzIyZDNlYTgzMTFkMmY4MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QcfckMfJrYcxjqMiMYCc1LBKcF7Tf5KETUk-op1zhXg",
+          },
+        }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
-
 
   useEffect(() => {
     getFilm();
