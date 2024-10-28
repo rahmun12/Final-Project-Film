@@ -6,12 +6,11 @@ import axios from "axios";
 const RatedMovies = () => {
   const [ratedMovies, setRatedMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // Menyimpan pesan error
+  const [error, setError] = useState(null); 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
-  const API_URL = "https://api.themoviedb.org/3/account/21559552/rated/movies"; // Pastikan URL API benar
-  const bearerToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNGJlOGY1ZWExYmQyY2Q2ZTE5YTQxOTdmZDQyOWM0ZiIsIm5iZiI6MTcyODM1ODA5My4yNDQ5NzgsInN1YiI6IjY3MDQ4MjQ3MzIyZDNlYTgzMTFkMmY4MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QcfckMfJrYcxjqMiMYCc1LBKcF7Tf5KETUk-op1zhXg"; // Token yang benar
-
+  const API_URL = "https://api.themoviedb.org/3/account/21559552/rated/movies"; 
+  const bearerToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNGJlOGY1ZWExYmQyY2Q2ZTE5YTQxOTdmZDQyOWM0ZiIsIm5iZiI6MTcyODM1ODA5My4yNDQ5NzgsInN1YiI6IjY3MDQ4MjQ3MzIyZDNlYTgzMTFkMmY4MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QcfckMfJrYcxjqMiMYCc1LBKcF7Tf5KETUk-op1zhXg"; 
   useEffect(() => {
     const fetchRatedMovies = async () => {
       try {
@@ -20,8 +19,8 @@ const RatedMovies = () => {
             Authorization: bearerToken,
           },
         });
-        console.log("Data dari API:", response.data); // Debug respons API
-        setRatedMovies(response.data.results); // Sesuaikan dengan struktur respons API
+        console.log("Data dari API:", response.data); 
+        setRatedMovies(response.data.results); 
       } catch (error) {
         console.error("Error fetching rated movies:", error);
         setError("Gagal mengambil data film yang di-rating. Coba lagi nanti.");
@@ -82,7 +81,7 @@ const RatedMovies = () => {
                 </h3>
                 <p className="text-sm text-gray-300">
                   Rating Anda:{" "}
-                  <span className="text-yellow-400">{movie.vote_average} / 10</span> {/* Rating dari TMDB */}
+                  <span className="text-yellow-400">{movie.vote_average} / 10</span> 
                 </p>
               </div>
             </div>
